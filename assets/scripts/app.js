@@ -160,10 +160,10 @@ function getRestaurantChoices(latt, long) {
             if (restaurantsFound > 0) {
                 let restaurantsJSON = restaurantsLink.restaurants
                 restaurantsJSON.forEach(({ restaurant }) => {
-                    let rest = new Restaurant(restaurant)
-                    listOfRest.push(rest)
+                    // let rest = new Restaurant(restaurant)
+                    listOfRest.push(restaurant)
 
-                    BuildRestCard(rest)
+                    BuildRestCard(restaurant)
                 })
             } else {
                 console.log('Nothing found')
@@ -172,33 +172,23 @@ function getRestaurantChoices(latt, long) {
         .catch(e => console.error(e))
 }
 
-function BuildRestCard(rest) {
+function BuildRestCard(restaurant) {
     let restaurantResultElem = document.createElement('div')
     restaurantResultElem.className = 'uk-card uk-card-default uk-button uk-grid-collapse uk-child-width-1-2@s uk-margin'
     restaurantResultElem.setAttribute('uk-grid', '')
-    console.log(rest.photos)
+    console.log(restaurant)
+    console.log(restaurant.photos)
     restaurantResultElem.innerHTML = `
-    <div class="uk-card-media-left uk-cover-container ">
-        <div class="uk-position-relative uk-visible-toggle uk-light food-image " tabindex="-1" uk-slideshow>
-        <ul class="uk-slideshow-items food-image">
-         ${
-        rest.photos.map(({ photo }) => {
-            return `
-            <li>
-            <img data-src="${photo.url}" class="uk-card-media-left food-image" alt="Restaurant Image" uk-cover uk-img="target: !ul > :last-child, !* +*">
-            </li> `})
-            }
-        </ul>
-        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-    </div>
-    </div>    
+
+          
+            <img data-src="${restaurant.photos_url}" class="uk-card-media-left food-image" alt="Restaurant Image" >
+            
             <div class="uk-card-body">
-                <h3 class="uk-card-title">${rest.name} <p class="uk-badge">${rest.user_rating.aggregate_rating}</p></h3>  
-                <p>Highlights: ${rest.highlights}</p>
-                <p>Cuisines: ${rest.cuisines}</p>
-                <p>Address: ${rest.address}</p>
-                <p>Phone: ${rest.phone_numbers}</p>
+                <h3 class="uk-card-title">${restaurant.name} <p class="uk-badge">${restaurant.user_rating.aggregate_rating}</p></h3>  
+                <p>Highlights: ${restaurant.highlights}</p>
+                <p>Cuisines: ${restaurant.cuisines}</p>
+                <p>Address: ${restaurant.address}</p>
+                <p>Phone: ${restaurant.phone_numbers}</p>
             </div>    
         </div>
          `
